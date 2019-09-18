@@ -1,0 +1,69 @@
+<script type="text/javascript">
+	function readSettings() {
+		$.ajax({
+			url: 'scripts/read_general_settings.php',
+			success: function callback(returnvalue) {
+				var obj = $.parseJSON(returnvalue);
+				$('#charset').val(obj.charset);
+				$('#title').val(obj.title);
+				$('#socket1').val(obj.socket1);
+				$('#socket2').val(obj.socket2);
+				$('#socket3').val(obj.socket3);
+			}
+		});
+	}
+	function writeSettings(charset, title, socket1, socket2, socket3) {
+		$.ajax({
+			type: 'POST',
+			url: 'scripts/update_general_settings.php',
+			data: { 'charset': charset, 'title': title, 'socket1': socket1, 'socket2': socket2, 'socket3': socket3 },
+			success: function callback(returnvalue) {
+				if(returnvalue == '1') {
+					$('title').html(title + ' &mdash; Allgemeine Einstellungen');
+					$('#inner_header_div').text(title);
+					alert('Speichern erfolgreich!');
+				}
+			}
+		});
+	}
+	$(document).ready(function() {
+		readSettings();
+		$('#refresh').on('click', function(e) {
+			e.preventDefault();
+			readSettings();
+		});
+		$('#save').on('click', function(e) {
+			writeSettings($('#charset').val(), $('#title').val(), $('#socket1').val(), $('#socket2').val(), $('#socket3').val());
+		});
+		$('input').keypress(function(e) {
+			if(e.which == 13) {
+				writeSettings($('#charset').val(), $('#title').val(), $('#socket1').val(), $('#socket2').val(), $('#socket3').val());
+			}
+		});
+	});
+</script>
+Allgemeine Einstellungen:
+<table>
+	<tr>
+		<td>Charset:</td>
+		<td><input type="text" id="charset"></input></td>
+	</tr>
+	<tr>
+		<td>Titel:</td>
+		<td><input type="text" id="title"></td>
+	</tr>
+	<tr>
+		<td>Name von Steckdose 1:</td>
+		<td><input type="text" id="socket1"></td>
+	</tr>
+	<tr>
+		<td>Name von Steckdose 2:</td>
+		<td><input type="text" id="socket2"></td>
+	</tr>
+	<tr>
+		<td>Name von Steckdose 3:</td>
+		<td><input type="text" id="socket3"></td>
+	</tr>
+</table>
+<button id="save">Speichern</button>
+<a href="#" id="refresh">Aktualiseren</a>

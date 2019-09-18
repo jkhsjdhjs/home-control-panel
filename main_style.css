@@ -1,0 +1,237 @@
+﻿/*--------------------Haupt-Stylesheet zum allgemeinen Aufbau/Design der Webseite--------------------*/
+
+@import url('/css/Font_Awesome.css');
+
+/*--------------------Unterseiten--------------------*/
+@import url('css/home.css');
+@import url('css/change_username.css');
+
+/*--------------------Schriftarten--------------------*/
+@font-face {
+	font-family: 'Century Gothic';
+	src: local('Century Gothic'), url(/fonts/Century_Gothic.woff) format('woff');
+}
+
+@font-face {
+	font-family: 'Kubus Bold';
+	src: local('Kubus Bold'), url(/fonts/Kubus_Bold.woff) format('woff');
+}
+
+@font-face {
+	font-family: 'Varela Round';
+	src: local('Varela Round'), local('VarelaRound-Regular'), url(/fonts/Varela_Round.woff) format('woff');
+}
+/*--------------------Schriftarten ENDE--------------------*/
+
+/*--------------------Allgemeine Deklarationen--------------------*/
+body {
+	padding: 0px;
+	margin: 0 auto;
+	font-size: 16px;
+	width: 1000px;
+	background-image: url('img/background.png');
+	background-repeat: repeat;
+}
+
+/*unschönen gestrichelten Rahmen bei Links verhindern*/
+a:focus {
+	outline: none;
+}
+/*--------------------Allgemeine Deklarationen ENDE--------------------*/
+
+/*--------------------Header--------------------*/
+
+header #logo {
+	z-index: 1;
+	position: absolute;
+	margin-left: 50px;
+	margin-top: 10px;
+}
+
+header {/*Spezialkonstruktion zum vertikalen Zentrieren*/
+	display: table;
+	width: 100%;
+}
+
+#outer_header_div {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#inner_header_div {
+	font-family: "Kubus Bold", Arial, Helvetica, sans-serif;
+	padding: 30px;
+	font-size: 50px;
+	color: #FFFFFF;
+	text-shadow: -1px -1px 2px black, 1px -1px 2px black, -1px 1px 2px black, 1px 1px 2px black;
+}
+/*--------------------Header ENDE--------------------*/
+
+/*--------------------Navigationsleiste/Navigationsbereich--------------------*/
+nav {
+	font-family: "Century Gothic", Arial, Helvetica, sans-serif;
+}
+
+nav ul {
+	padding: 0px;
+	margin: 0px;
+	box-shadow: 2px 2px 2px #888888;
+}
+
+nav ul#menu {
+	background-color: #BDD7EE;
+}
+
+nav ul li {
+	list-style: none;
+	float: left;
+}
+
+nav ul li a {
+	text-decoration: none;
+	display: block;
+}
+
+nav ul li a {
+	color: #2E75B6;
+}
+
+nav ul#menu li a {
+	padding: 10px 25px 10px 25px;
+}
+
+nav ul:after {
+    clear: both;
+    content: " ";
+    display: block;
+    font-size: 0px;
+    height: 0px;
+    visibility: hidden;
+}
+
+nav ul#menu a:hover {
+	background-color: #2E75B6;
+	color: #BDD7EE;
+}
+
+nav ul#sub2, nav ul#sub3 {
+	visibility: hidden;
+	position: absolute;
+	width: 1000px;
+}
+
+nav ul#sub2 li a, nav ul#sub3 li a {
+	padding: 7px 25px 7px 25px;
+}
+
+nav ul#sub2 {
+	z-index: 1;
+}
+
+nav ul#sub3 {
+	z-index: 2;
+}
+
+nav ul#sub2 a, nav ul#sub3 a, nav ul#sub2, nav ul#sub3 {
+	background-color: #2E75B6;
+	color: #BDD7EE;
+}
+
+nav ul#sub2 a:hover, nav ul#sub3 a:hover {
+	color: #000000;
+}
+
+.sub-active {
+	color: #000000 !important;
+}
+.sub-passive {
+	color: #BDD7EE;
+}
+
+.active {
+	background-color: #2E75B6;
+	color: #000000 !important;
+}
+
+.passive {
+	background-color: #BDD7EE;
+	color: #2E75B6;
+}
+/*--------------------Navigationsleiste/Navigationsbereich ENDE--------------------*/
+
+/*--------------------Content Basis--------------------*/
+#content_title {
+	font-family: "Varela Round", Arial, Helvetica, sans-serif;
+	font-size: 1.4rem;
+	margin-top: 50px;
+	text-align: center;
+}
+#content {
+	padding: 10px;
+	margin-top: 10px;
+	background-color: #FAFAFA;
+	border-radius: 15px;
+	box-shadow: 2px 2px 2px #888888;
+	margin-bottom: 20px;
+}
+/*--------------------Content Basis ENDE--------------------*/
+
+/*--------------------Login Form--------------------*/
+#login {
+	width: 314px;
+	margin: 0 auto;
+	font-family: "Varela Round", Arial, Helvetica, sans-serif;
+}
+
+#login #username, #login #password {
+	font-family: "Varela Round", Arial, Helvetica, sans-serif;
+	border: none;
+	border-radius: 10px;
+	background-color: #D2D7D8;
+	height: 50px;
+	width: 300px;
+	margin-bottom: 2px;
+	padding-left: 7px;
+	padding-right: 7px;
+	text-align: center;
+}
+
+#login #username:hover, #login #password:hover {
+	background-color: #ECF0F1;
+}
+
+#login #username:focus, #login #password:focus {
+	background-color: #ECF0F1;
+	box-shadow: 0px 0px 0px 2px #3498DB;
+}
+
+#login a {
+	text-decoration: underline;
+}
+
+#login a:visited {
+	color: #000000;
+}
+
+#login #login_content {
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+	background-color: #A0A0A0;
+	padding: 10px;
+	width: 100%;
+}
+
+#login #login_header {
+	font-size: 1.3rem;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	padding: 10px;
+	background-color: #D0CECE;
+	width: 100%;
+}
+
+#login #login_header #text {
+	padding-left: 3px;
+}
+/*--------------------Login Form ENDE--------------------*/

@@ -1,0 +1,45 @@
+<script type="text/javascript">
+	function change_pw(pw) {
+		pw = md5(pw);
+		$.ajax({
+			type: 'POST',
+			url: 'scripts/change_pw.php',
+			data: { 'pw': pw },
+			success: function callback(returnvalue) {
+				if(returnvalue == '1') {
+					alert('Passwort erfolgreich geändert!');
+					$('#pw1').val('');
+					$('#pw2').val('');
+				}
+				else {
+					alert('Es sind Fehler aufgetreten! Sie können den Administrator unter der E-Mail Adresse webmaster@totally.rip erreichen!');
+				}
+			}
+		});
+	}
+	
+	$(document).ready(function() {
+		$('#save').on('click', function(e) {
+			if($('#pw1').val() == $('#pw2').val()) {
+				change_pw($('#pw1').val());
+			}
+			else {
+				alert('Fehler! Die eingegebenen Passwörter stimmen nicht überein!');
+			}
+		});
+		$('input').keypress(function(e) {
+			if(e.which == 13) {
+				if($('#pw1').val() == $('#pw2').val()) {
+					change_pw($('#pw1').val());
+				}
+				else {
+					alert('Fehler! Die eingegebenen Passwörter stimmen nicht überein!');
+				}
+			}
+		});
+	});
+</script>
+<div id="abc">Passwort ändern:</div>
+<input id="pw1" type="password" placeholder="Neues Passwort"><br>
+<input id="pw2" type="password" placeholder="Passwort wiederholen"><br>
+<button id="save">Speichern</button>

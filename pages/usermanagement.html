@@ -1,0 +1,199 @@
+<style type="text/css">
+	table {
+		font-size: 0.7rem;
+	}
+</style>
+<script type="text/javascript">
+	var number_of_users, page = [], IDs = [], current_page = 1;
+	page[0] = 0;
+	function readUsers() {
+		$.ajax({
+			url: 'scripts/read_number_of_users.php',
+			success: function callback(returnvalue) {
+				var NoU = parseInt(returnvalue);
+				number_of_users = NoU;
+				if(NoU > 10) {
+					for(var i = 1; NoU >= 10; i++) {
+						page[i] = 10;
+						NoU -= 10;
+					}
+					page[i] = NoU;
+				}
+				else {
+					page[1] = NoU;
+				}
+				for(var i = 1; i <= number_of_users; i++) {
+					IDs[i] = getIDofDataset(i);
+				}
+				buildTable(1);
+			}
+		});
+	}
+	function getIDofDataset(dataset) {
+		var val;
+		$.ajax({
+			type: 'POST',
+			url: 'scripts/get_id_of_dataset.php',
+			data: { 'dataset': dataset },
+			async: false,
+			success: function callback(returnvalue) {
+				val = parseInt(returnvalue);
+			}
+		});
+		return val;
+	}
+	function buildTable(page_) {
+		if(number_of_users == 0) {
+			$('#table').text('Keine Benutzer vorhanden!');
+		}
+		else if(typeof page[page_] != 'undefined' && page[page_] != 0) {
+			current_page = page_;
+			$('#table').html('<table border="1" id="' + page_.toString() + '"></table>');
+			$('table').append('<tr id="title"><td id="userid">ID</td><td id="username">Benutzername</td><td id="email">E-Mail</td><td id="NumberOfLogins">Anzahl der Logins</td><td id="LastLogin">Letzter Login</td><td id="LastLogin2">Vorletzter Login</td><td id="AccountCreation">Account erstellt am</td><td id="admin">Administrator</td><td id="socket1"></td><td id="socket2"></td><td id="socket3"></td><td id="save">Speichern</td><td id="delete">Löschen</td></tr>');
+			for(var i = 1; i <= page[page_]; i++) {
+				$('table').append('<tr id="tr' + IDs[i + page[page_ - 1]].toString() + '"><td id="userid"></td><td id="username"></td><td id="email"></td><td id="NumberOfLogins"></td><td id="LastLogin"></td><td id="LastLogin2"></td><td id="AccountCreation"></td><td id="admin"></td><td id="socket1"></td><td id="socket2"></td><td id="socket3"></td><td id="save"><a href="#" onClick="savePerms(' + IDs[i + page[page_ - 1]].toString() + ');">S</a></td><td id="delete"><a href="#" onClick="deleteUser(' + IDs[i + page[page_ - 1]].toString() + ');">X</a></td></tr>');
+			}
+			if(typeof page[page_ + 1] != 'undefined' && page[page_ + 1] != 0) {
+				$('#div_next_page').html('<a href="#" id="next_page" onClick="nextPage();">Nächste Seite</a>');
+			}
+			else {
+				$('#div_next_page').text('');
+			}
+			if(typeof page[page_ - 1] != 'undefined' && page[page_ - 1] != 0) {
+				$('#div_previous_page').html('<a href="#" id="previous_page" onClick="previousPage();">Vorherige Seite</a>');
+			}
+			else {
+				$('#div_previous_page').text('');
+			}
+			fillTable(page_);
+		}
+	}
+	function fillTable(page_) {
+		$.ajax({
+			url: 'scripts/read_name_of_sockets.php',
+			async: false,
+			success: function callback(returnvalue) {
+				var obj = $.parseJSON(returnvalue);
+				$('table #title #socket1').text(obj.socket1);
+				$('table #title #socket2').text(obj.socket2);
+				$('table #title #socket3').text(obj.socket3);
+			}
+		});
+		for(var i = 1; i <= page[page_]; i++) {
+			$.ajax({
+				type: 'POST',
+				url: 'scripts/read_specific_user_info.php',
+				data: { 'ID': IDs[i + page[page_ - 1]] },
+				async: false,
+				success: function callback(returnvalue) {
+					var obj = $.parseJSON(returnvalue);
+					var selector = 'table #tr' + IDs[i + page[page_ - 1]].toString() + ' #';
+					$(selector + 'userid').text(obj.ID);
+					$(selector + 'username').text(obj.username);
+					$(selector + 'email').text(obj.email);
+					$(selector + 'NumberOfLogins').text(obj.NumberOfLogins);
+					$(selector + 'LastLogin').text(obj.LastLoginDate + ' ' + obj.LastLoginTime);
+					$(selector + 'LastLogin2').text(obj.LastLoginDate2 + ' ' + obj.LastLoginTime2);
+					$(selector + 'AccountCreation').text(obj.AccountCreationDate + ' ' + obj.AccountCreationTime);
+					if(obj.admin == '1') {
+						$(selector + 'admin').html('<input type="checkbox" id="admin" checked>');
+					}
+					else {
+						$(selector + 'admin').html('<input type="checkbox" id="admin">');
+					}
+					if(obj.socket1 == '1') {
+						$(selector + 'socket1').html('<input type="checkbox" id="socket1" checked>');
+					}
+					else {
+						$(selector + 'socket1').html('<input type="checkbox" id="socket1">');
+					}
+					if(obj.socket2 == '1') {
+						$(selector + 'socket2').html('<input type="checkbox" id="socket2" checked>');
+					}
+					else {
+						$(selector + 'socket2').html('<input type="checkbox" id="socket2">');
+					}
+					if(obj.socket3 == '1') {
+						$(selector + 'socket3').html('<input type="checkbox" id="socket3" checked>');
+					}
+					else {
+						$(selector + 'socket3').html('<input type="checkbox" id="socket3">');
+					}
+				}
+			});
+		}
+	}
+	function savePerms(id) {
+		if($('table #tr' + id + ' #admin input').is(":checked")) {
+			var admin = 1;
+		}
+		else {
+			var admin = 0;
+		}
+		if($('table #tr' + id + ' #socket1 input').is(":checked")) {
+			var socket1 = 1;
+		}
+		else {
+			var socket1 = 0;
+		}
+		if($('table #tr' + id + ' #socket2 input').is(":checked")) {
+			var socket2 = 1;
+		}
+		else {
+			var socket2 = 0;
+		}
+		if($('table #tr' + id + ' #socket3 input').is(":checked")) {
+			var socket3 = 1;
+		}
+		else {
+			var socket3 = 0;
+		}
+		$.ajax({
+			type: 'POST',
+			url: 'scripts/savePerms.php',
+			data: { 'id': id, 'admin': admin, 'socket1': socket1, 'socket2': socket2, 'socket3': socket3 },
+			success: function callback(returnvalue) {
+				if(returnvalue == '1') {
+					alert('Gespeichert!');
+				}
+				else {
+					alert('Fehler beim Speichern!');
+				}
+			}
+		});
+	}
+	function deleteUser(id) {
+		if(confirm('Möchten Sie den Nutzer mit der ID ' + id + ' wirklich löschen?')) {
+			$.ajax({
+				type: 'POST',
+				url: 'scripts/deleteUser.php',
+				data: { 'id': id },
+				success: function callback(returnvalue) {
+					if(returnvalue == '1') {
+						readUsers();
+					}
+					else {
+						alert('Fehler beim Löschen!');
+					}
+				}
+			});
+		}
+	}
+	function nextPage() {
+		buildTable(current_page + 1);
+	}
+	function previousPage() {
+		buildTable(current_page - 1);
+	}
+	$(document).ready(function() {
+		readUsers();
+	});
+</script>
+
+Benutzerverwaltung:
+<div id="table">
+</div>
+<div id="div_next_page">
+</div>
+<div id="div_previous_page">
+</div>

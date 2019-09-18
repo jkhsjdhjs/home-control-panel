@@ -1,0 +1,41 @@
+.animate {
+	transition: all 0.1s;
+}
+
+.action-button {
+	font-family: "Century Gothic", Arial, Helvetica, sans-serif;
+	position: relative;
+	padding: 10px 40px;
+	margin: 10px 10px 10px 0px;
+	float: left;
+	height: 30px;
+	width: 45px;
+	border-radius: 10px;
+	color: white;
+	font-size: 1.563rem;
+	text-decoration: none;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.red {
+	background-color: #E74C3C;
+	border-bottom: 5px solid #BD3E31;
+	text-shadow: 0px -2px #BD3E31;
+}
+
+.green {
+	background-color: #82BF56;
+	border-bottom: 5px solid #669644;
+	text-shadow: 0px -2px #669644;
+}
+
+.action-button:active {
+	transform: translate(0px,6px);
+	border-bottom: 2px solid;
+}
+
+#button_title {
+	font-family: "Varela Round", Arial, Helvetica, sans-serif;
+	font-size: 1.563rem;
+}

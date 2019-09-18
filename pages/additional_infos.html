@@ -1,0 +1,98 @@
+<script type="text/javascript">
+	function loadInfo() {
+		$.ajax({
+			url: 'scripts/get_additional_infos.php',
+			success: function callback(returnvalue) {
+				var obj = $.parseJSON(returnvalue);
+				$('#ID').text(obj.ID);
+				$('#username').text(obj.username);
+				$('#email').text(obj.email);
+				$('#NumberOfLogins').text(obj.NumberOfLogins);
+				$('#LastLogin').text(obj.LastLoginDate + ' ' + obj.LastLoginTime + ' Uhr');
+				$('#LastLogin2').text(obj.LastLoginDate2 + ' ' + obj.LastLoginTime2 + ' Uhr');
+				if(obj.admin == 1) {
+					var admin = 'ja';
+				}
+				else {
+					var admin = 'nein';
+				}
+				if(obj.socket1 == 1) {
+					var socket1 = 'ja';
+				}
+				else {
+					var socket1 = 'nein';
+				}
+				if(obj.socket2 == 1) {
+					var socket2 = 'ja';
+				}
+				else {
+					var socket2 = 'nein';
+				}
+				if(obj.socket3 == 1) {
+					var socket3 = 'ja';
+				}
+				else {
+					var socket3 = 'nein';
+				}
+				$('#admin').text(admin);
+				$('#socket1').text(socket1);
+				$('#socket2').text(socket2);
+				$('#socket3').text(socket3);
+				$('#name_socket1').text(obj.name_socket1);
+				$('#name_socket2').text(obj.name_socket2);
+				$('#name_socket3').text(obj.name_socket3);
+			}
+		});
+	}
+	$(document).ready(function() {
+		loadInfo();
+		$('#refresh').on('click', function(e) {
+			e.preventDefault();
+			loadInfo();
+		});
+	});
+</script>
+Sonstige Informationen:<br>
+<table>
+	<tr>
+		<td>ID:</td>
+		<td><a id="ID"></a></td>
+	</tr>
+	<tr>
+		<td>Benutzername:</td>
+		<td><a id="username"></a></td>
+	</tr>
+	<tr>
+		<td>E-Mail Adresse:</td>
+		<td><a id="email"></a></td>
+	</tr>
+	<tr>
+		<td>Bisherige Logins:</td>
+		<td><a id="NumberOfLogins"></a></td>
+	</tr>
+	<tr>
+		<td>Letzter Login:</td>
+		<td><a id="LastLogin"></a></td>
+	</tr>
+	<tr>
+		<td>Vorletzter Login:</td>
+		<td><a id="LastLogin2"></a></td>
+	</tr>
+	<tr>
+		<td>Administrator:</td>
+		<td><a id="admin"></a></td>
+	</tr>
+	<tr>
+		<td>Berechtigung für <a id="name_socket1"></a>:</td>
+		<td><a id="socket1"></a></td>
+	</tr>
+	<tr>
+		<td>Berechtigung für <a id="name_socket2"></a>:</td>
+		<td><a id="socket2"></a></td>
+	</tr>
+	<tr>
+		<td>Berechtigung für <a id="name_socket3"></a>:</td>
+		<td><a id="socket3"></a></td>
+	</tr>
+</table>
+<a href="#" id="refresh">Aktualisieren</a>
