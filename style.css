@@ -2,17 +2,17 @@
 
 @font-face {
 	font-family: 'Century Gothic';
-	src: local('Century Gothic'), url(/fonts/Century_Gothic.woff) format('woff');
+	src: local('Century Gothic'), url(fonts/Century_Gothic.woff) format('woff');
 }
 
 @font-face {
 	font-family: 'Elemental End';
-	src: local('Elemental End'), url(/fonts/Elemental_End.woff) format('woff');
+	src: local('Elemental End'), url(fonts/Elemental_End.woff) format('woff');
 }
 
 @font-face {
 	font-family: 'Varela Round';
-	src: local('Varela Round'), local('VarelaRound-Regular'), url(/fonts/Varela_Round.woff) format('woff');
+	src: local('Varela Round'), local('VarelaRound-Regular'), url(fonts/Varela_Round.woff) format('woff');
 }
 
 body {
