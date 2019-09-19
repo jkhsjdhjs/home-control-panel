@@ -9,17 +9,17 @@
 /*--------------------Schriftarten--------------------*/
 @font-face {
 	font-family: 'Century Gothic';
-	src: local('Century Gothic'), url(/fonts/Century_Gothic.woff) format('woff');
+	src: local('Century Gothic'), url(fonts/Century_Gothic.woff) format('woff');
 }
 
 @font-face {
 	font-family: 'Kubus Bold';
-	src: local('Kubus Bold'), url(/fonts/Kubus_Bold.woff) format('woff');
+	src: local('Kubus Bold'), url(fonts/Kubus_Bold.woff) format('woff');
 }
 
 @font-face {
 	font-family: 'Varela Round';
-	src: local('Varela Round'), local('VarelaRound-Regular'), url(/fonts/Varela_Round.woff) format('woff');
+	src: local('Varela Round'), local('VarelaRound-Regular'), url(fonts/Varela_Round.woff) format('woff');
 }
 /*--------------------Schriftarten ENDE--------------------*/
 
